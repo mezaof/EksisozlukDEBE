@@ -25,6 +25,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	private static final String TAG_ID = "id";
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_USER = "user";
+	public static FancyAdapter fancyAdapter =null;
 
 	class Entry{
 		public String EntryID;
@@ -35,37 +36,16 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	ArrayList<Entry> entryData = new ArrayList<Entry>();
 
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
-		DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
-		final int day = datePicker.getDayOfMonth();
-		final int month = datePicker.getMonth()+1;
-		final int year = datePicker.getYear();
-
-		String URL = "http://sporlin.com/debe/json.php?date=" + day + "-" + month + "-" + year;
-
-		Button getirButton = (Button) findViewById(R.id.button1);
-		getirButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				String URL = "http://sporlin.com/debe/json.php?date=" + day + "-" + month + "-" + year;
-				Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_LONG).show();
-
-			}
-		});
-
-		// Creating new JSON Parser
+	public void getJson(String URL){
+		if(URL=="a")
+			URL = "http://sporlin.com/debe/json.php?date=2015-10-11";
+		Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_LONG).show();
+		// Creating new JSON Parser Commit ol sikicem. hadi aq asdasdasd
 		JSONParser jParser = new JSONParser();
 
 		// Getting JSON from URL
 		JSONObject getJSON = jParser.getJSONFromUrl(URL);
 
-		FancyAdapter fancyAdapter =null;
 		JSONArray jsonArray = null;
 		try {
 			// Getting JSON Array
@@ -82,18 +62,34 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 			ListView myListView = (ListView)findViewById(R.id.listView);
 			myListView.setOnItemClickListener(this);
-
-
 			fancyAdapter = new FancyAdapter();
-			myListView.setAdapter(fancyAdapter);
-
+			myListView.setAdapter(fancyAdapter);;
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
+		return;
+	}
 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
+		DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
+		Button getirButton = (Button) findViewById(R.id.button1);
+
+		getirButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//Clear if new click
+				if(fancyAdapter!=null)
+					fancyAdapter.clear();
+				String URL = "http://sporlin.com/debe/json.php?date=" + datePicker.getYear() + "-" + (datePicker.getMonth()+1) + "-" + datePicker.getDayOfMonth();
+				getJson(URL);
+			}
+		});
 	}
 
 
