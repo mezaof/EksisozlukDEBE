@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		if(URL=="a")
 			URL = "http://sporlin.com/debe/json.php?date=2015-10-11";
 		Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_LONG).show();
-		// Creating new JSON Parser Commit ol sikicem. hadi aq asdasdasd
+		// Creating new JSON Parser Commit ol sikicem. hadi aq atestsetsdasdasd
 		JSONParser jParser = new JSONParser();
 
 		// Getting JSON from URL
