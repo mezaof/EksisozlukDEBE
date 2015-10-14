@@ -2,9 +2,7 @@ package learn2crack.jsonparsing;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +11,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import learn2crack.jsonparsing.library.JSONParser;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -77,9 +76,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		LinearLayout contentLayout = (LinearLayout)findViewById(R.id.contentLayout);
+		contentLayout.setVisibility(LinearLayout.GONE);
+
 		DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
 		Button getirButton = (Button) findViewById(R.id.button1);
-
 		getirButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -93,8 +94,29 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	}
 
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
 
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
 
+	public void searchEvent(MenuItem item){
+		LinearLayout mainLayout = (LinearLayout)findViewById(R.id.linearLayout);
+		mainLayout.setVisibility(LinearLayout.GONE);
+		LinearLayout contentLayout = (LinearLayout)findViewById(R.id.contentLayout);
+		contentLayout.setVisibility(LinearLayout.VISIBLE);
+		TextView txtView = (TextView)findViewById(R.id.contentText);
+		txtView.setText("test");
+	}
+
+	public void settingEvent(MenuItem item){
+		LinearLayout mainLayout = (LinearLayout)findViewById(R.id.linearLayout);
+		mainLayout.setVisibility(LinearLayout.VISIBLE);
+		LinearLayout contentLayout = (LinearLayout)findViewById(R.id.contentLayout);
+		contentLayout.setVisibility(LinearLayout.GONE);
+	}
 	public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 		Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
 		String title = ((TextView) v.findViewById(R.id.name)).getText().toString();
